@@ -85,7 +85,14 @@
 				<div class="content">
 					<span class="close"></span>
 					<div class="modal-body">
-						<form name="reserve" action="index.html" method="get" novalidate>
+						<form
+							id="form"
+							name="reserve"
+							action="index.html"
+							method="get"
+							novalidate
+						>
+							<!-- FirstName -->
 							<div class="formData">
 								<label for="first">Prénom</label><br />
 								<input
@@ -93,8 +100,11 @@
 									type="text"
 									id="first"
 									name="first"
-								/><br />
+								/>
+								<small class="error"></small>
 							</div>
+
+							<!-- LastName -->
 							<div class="formData">
 								<label for="last">Nom</label><br />
 								<input
@@ -102,8 +112,11 @@
 									type="text"
 									id="last"
 									name="last"
-								/><br />
+								/>
+								<small class="error"></small>
 							</div>
+
+							<!-- Email -->
 							<div class="formData">
 								<label for="email">E-mail</label><br />
 								<input
@@ -111,8 +124,11 @@
 									type="email"
 									id="email"
 									name="email"
-								/><br />
+								/>
+								<small class="error"></small>
 							</div>
+
+							<!-- BirthDate -->
 							<div class="formData">
 								<label for="birthdate">Date de naissance</label><br />
 								<input
@@ -122,6 +138,8 @@
 									name="birthdate"
 								/><br />
 							</div>
+
+							<!-- Tournaments quantity & locations -->
 							<div class="formData">
 								<label for="quantity"
 									>À combien de tournois GameOn avez-vous déjà participé
@@ -208,23 +226,27 @@
 								>
 							</div>
 
+							<!-- Terms of use & Newsletters-->
 							<div class="formData">
 								<input
 									class="checkbox-input"
 									type="checkbox"
 									id="checkbox1"
+									name="terms"
 									checked
 									required
 								/>
-								<label
-									class="checkbox2-label"
-									for="checkbox1"
-								>
+								<label class="checkbox2-label" for="checkbox1">
 									<span class="checkbox-icon"></span>
 									J'ai lu et accepté les conditions d'utilisation.
 								</label>
 								<br />
-								<input class="checkbox-input" type="checkbox" id="checkbox2" />
+								<input
+									class="checkbox-input"
+									type="checkbox"
+									id="checkbox2"
+									name="newsletters"
+								/>
 								<label class="checkbox2-label" for="checkbox2">
 									<span class="checkbox-icon"></span>
 									Je souhaite être prévenu(e) des prochains évènements.
@@ -236,6 +258,7 @@
 								type="submit"
 								class="button"
 								value="C'est parti"
+								name="submit"
 							/>
 						</form>
 					</div>

@@ -32,116 +32,81 @@ function closeModal() {
 /*__________FORM VALIDATION___________*/
 
 // Sélection des éléments dans le DOM :
-const form = document.querySelector('form');
-const firstName = document.getElementById('first');
-const lastName = document.getElementById('last');
-const email = document.getElementById('email');
-const birthDate = document.getElementById('birthDate');
-const quantity = document.getElementById('quantity');
-const allLocations = document.querySelectorAll(".checkbox-input[type='radio']");
-const termsOfUse = document.getElementById('checkbox1');
-const newsletters = document.getElementById('checkbox2');
-const btnSubmit = document.querySelector('.btn-submit');
+const form = document.querySelector('#form');
 
-// Variables des Expressions Régulières :
-const regexName = new RegExp("^[a-zA-Z-' ]{2,50}$");
+// On récupère les "input" du formulaire grâce à leur "name" avec une notation en point :
+const firstName = form.first;
+const lastName = form.last;
+const email = form.email;
+const birthDate = form.birthdate;
+const quantity = form.quantity;
+const allLocations = document.querySelectorAll(".checkbox-input[type='radio']");
+const termsOfUse = form.terms;
+const newsletters = form.newsletters;
+const btnSubmit = form.submit;
+
+// On récupère les balises "small" :
+const firstSmall = firstName.nextElementSibling;
+const lastSmall = lastName.nextElementSibling;
+const emailSmall = email.nextElementSibling;
+
+// Création des Expressions Régulières :
+const regexName = new RegExp("^[a-zA-Z-' ]{2,50}$", 'g');
 const regexEmail = new RegExp(
-	'^[a-z0-9][-a-z0-9._]+@([-a-z0-9]+.)+[.]{1}[a-z]{2,3}$'
+	'^[a-z0-9][-a-z0-9._]+@([-a-z0-9]+.)+[.]{1}[a-z]{2,3}$',
+	'g'
 );
 
-// Validation des saisies du formulaire :
+/*___________Validation des saisies du formulaire___________*/
 
-// First Name :
-let isValidFirstName = false;
+// Fonctions de vérification :
 const checkFirstName = () => {
-	firstName.addEventListener('change', () => {
-		const firstNameValue = firstName.value.trim();
-		firstName.setCustomValidity(''); // fixe les propriétés de validation d'un input
-		if (regexName.test(firstNameValue) === false || firstNameValue === '') {
-			firstName.setCustomValidity(
-				'Veuillez entrer 2 caractères ou plus pour le champ du prénom.'
-			);
-		} else {
-			return (isValidFirstName = true);
-		}
-		firstName.reportValidity(); // Affiche le message d'erreur à l'utilisateur
-	});
-};
-checkFirstName();
-
-// Last Name :
-let isValidLastName = false;
-const checkLastName = () => {
-	lastName.addEventListener('change', () => {
-		const lastNameValue = lastName.value.trim();
-		lastName.setCustomValidity('');
-		if (regexName.test(lastNameValue) === false || lastNameValue === '') {
-			lastName.setCustomValidity(
-				'Veuillez entrer 2 caractères ou plus pour le champ du nom.'
-			);
-		} else {
-			return (isValidLastName = true);
-		}
-		lastName.reportValidity();
-	});
-};
-checkLastName();
-
-// E-mail :
-let isValidEmail = false;
-const checkEmail = () => {
-	email.addEventListener('change', () => {
-		const emailValue = email.value.trim();
-		email.setCustomValidity('');
-		if (regexEmail.test(emailValue) === false || emailValue === '') {
-			email.setCustomValidity("La saisie de l'adresse email n'est pas valide.");
-		} else {
-			return (isValidEmail = true);
-		}
-		email.reportValidity();
-	});
-};
-checkEmail();
-
-// Birth Date :
-let isValidBirthDate = false;
-const checkBirthDate = () => {
-	if (birthDate === Number) {
+	if (regexName.test(firstName.value.trim())) {
+		firstSmall.innerHTML = 'Saisie valide.';
+		firstSmall.style.color = 'green';
 		return true;
 	} else {
+		firstSmall.innerHTML =
+			'Veuillez entrer 2 caractères ou plus pour le champs du nom.';
+		firstSmall.style.color = 'red';
 		return false;
 	}
 };
-checkBirthDate();
 
-// Location :
-let isValidLocation = false;
-const checkLocation = () => {
-	for (let i = 0; i < allLocations.length; i++) {
-		if (allLocations[i].checked) {
-			return (isValidLocation = true);
-		}
+const checkLastName = () => {
+	if (regexName.test(lastName.value.trim())) {
+		lastSmall.innerHTML = 'Saisie valide.';
+		lastSmall.style.color = 'green';
+		return true;
+	} else {
+		lastSmall.innerHTML =
+			'Veuillez entrer 2 caractères ou plus pour le champs du nom.';
+		lastSmall.style.color = 'red';
+		return false;
 	}
-	return (isValidLocation = false);
 };
-checkLocation();
 
-// Validation pour envoi du formulaire :
-const isFormValid = () => {
-	btnSubmit.addEventListener('click', (e) => {
-		e.preventDefault(); // stop la propagation de l'évènement aux parents.
-
-		if (
-			isValidFirstName == true &&
-			isValidLastName == true &&
-			isValidEmail == true &&
-			isValidLocation == true &&
-			termsOfUse.checked == true
-		) {
-			alert('Merci ! Votre réservation a été reçue.');
-		} else {
-			alert('Un ou plusieurs champs requis ne sont pas valides.');
-		}
-	});
+const checkEmail = () => {
+	if (regexEmail.test(email.value.trim())) {
+		emailSmall.innerHTML = 'Saisie valide.';
+		emailSmall.style.color = 'green';
+		return true;
+	} else {
+		emailSmall.innerHTML = "Cette adresse e-mail n'est pas valide.";
+		emailSmall.style.color = 'red';
+		return false;
+	}
 };
-isFormValid();
+
+// Ecoute des champs saisis :
+firstName.addEventListener('change', () => {
+	checkFirstName();
+});
+
+lastName.addEventListener('change', () => {
+	checkLastName();
+});
+
+email.addEventListener('change', () => {
+	checkEmail();
+});
