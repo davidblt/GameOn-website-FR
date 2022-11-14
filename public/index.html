@@ -107,12 +107,7 @@
 							<!-- LastName -->
 							<div class="formData">
 								<label for="last">Nom</label><br />
-								<input
-									class="text-control"
-									type="text"
-									id="last"
-									name="last"
-								/>
+								<input class="text-control" type="text" id="last" name="last" />
 								<small class="error"></small>
 							</div>
 
@@ -136,7 +131,8 @@
 									type="date"
 									id="birthdate"
 									name="birthdate"
-								/><br />
+								/>
+								<small class="error"></small>
 							</div>
 
 							<!-- Tournaments quantity & locations -->
@@ -153,6 +149,7 @@
 									min="0"
 									max="99"
 								/>
+								<small class="error"></small>
 							</div>
 							<p class="text-label">
 								A quel tournoi souhaitez-vous participer cette année ?
@@ -225,6 +222,7 @@
 									Portland</label
 								>
 							</div>
+							<small id="location-msg" class="error"></small>
 
 							<!-- Terms of use & Newsletters-->
 							<div class="formData">
