@@ -12,6 +12,8 @@ const modalbg = document.querySelector('.bground');
 const modalBtn = document.querySelectorAll('.modal-btn');
 const formData = document.querySelectorAll('.formData');
 const modalClose = document.querySelector('.close');
+const modalRegistered = document.querySelector('.registered');
+const modalBody = document.querySelector('.modal-body');
 
 // launch modal event
 modalBtn.forEach((btn) => btn.addEventListener('click', launchModal));
@@ -19,6 +21,7 @@ modalBtn.forEach((btn) => btn.addEventListener('click', launchModal));
 // launch modal form
 function launchModal() {
 	modalbg.style.display = 'block';
+	modalRegistered.style.display = 'none';
 }
 
 // close modal event
@@ -28,6 +31,8 @@ modalClose.addEventListener('click', closeModal);
 function closeModal() {
 	modalbg.style.display = 'none';
 }
+
+//------------------------------------------------------------------
 
 /*__________FORM VALIDATION___________*/
 
@@ -42,8 +47,8 @@ const birthDate = form.birthdate;
 const quantity = form.quantity;
 // const locations = form.location;
 const locations = document.querySelectorAll('input[type="radio"]');
-const termsOfUse = form.terms;
-const newsletters = form.newsletters;
+const termsOfUse = document.querySelector('input[name="terms"]:checked');
+const newsLetters = document.querySelector('input[name="newsletters"]:checked');
 const btnSubmit = form.submit;
 
 // On récupère les balises "small" :
@@ -53,6 +58,7 @@ const emailSmall = email.nextElementSibling;
 const dateSmall = birthDate.nextElementSibling;
 const quantitySmall = quantity.nextElementSibling;
 const locationSmall = document.getElementById('location-msg');
+const registered = document.querySelector('.registered');
 
 // Création des Expressions Régulières :
 const regexName = new RegExp("^[a-zA-Z-' ]{2,50}$");
@@ -122,8 +128,7 @@ email.addEventListener('change', () => {
 
 birthDate.addEventListener('change', () => {
 	if (birthDate.value != '') {
-		dateSmall.innerHTML = 'Saisie valide';
-		dateSmall.style.color = 'green';
+		dateSmall.innerHTML = '';
 		control = true;
 	} else {
 		dateSmall.innerHTML = 'Vous devez entrer votre date de naissance.';
@@ -149,6 +154,23 @@ quantity.addEventListener('change', () => {
 	}
 });
 
+termsOfUse.addEventListener('change', () => {
+	let termsSmall = document.getElementById('terms-msg');
+	if (termsOfUse.checked) {
+		termsSmall.innerHTML = '';
+		control = true;
+	} else {
+		termsSmall.innerHTML =
+			"Vous devez accepter les conditions d'utilisation pour vous inscrire.";
+		termsSmall.style.color = 'red';
+		control = false;
+	}
+});
+
+//------------------------------------------------------------
+
+//______________ FINAL VALIDATION ______________
+
 /*
  Fonction de validation du formulaire :
  si la variable "control" est true, alors le formulaire peut être envoyer au serveur.
@@ -158,10 +180,29 @@ const isFormValid = () => {
 	btnSubmit.addEventListener('click', (e) => {
 		e.preventDefault();
 		if (control) {
-			console.log('envoi serveur');
+			launchSuccess();
 		} else {
 			alert('Un ou plusieurs champs du formulaire ne sont pas valides');
 		}
 	});
 };
 isFormValid();
+
+const launchSuccess = () => {
+	registered.style.display = 'block'; // a créer en HTML CSS
+	modalBody.style.display = 'none';
+	console.log('envoi serveur');
+};
+
+//------------------------------------------------------------------
+/*** OBJET POUR ENVOI SERVEUR */
+let registrationUserInfos = {
+	firstName: firstName.value,
+	lastName: lastName.value,
+	email: email.value,
+	birthDate: birthDate.value,
+	quantity: Number(quantity.value),
+	// location: document.querySelector('input[type="radio"]:checked'),
+	// termsOfUse: termsOfUse.value,
+	// newsLetters: newsLetters.value,
+};

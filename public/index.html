@@ -35,6 +35,12 @@
 			href="../public/favicon/favicon-16x16.png"
 		/>
 
+		<!-- font awesome -->
+		<script
+			src="https://kit.fontawesome.com/d39b49135d.js"
+			crossorigin="anonymous"
+		></script>
+
 		<!-- javascript -->
 		<script src="../src/js/modal.js" defer></script>
 	</head>
@@ -80,10 +86,19 @@
 				<button class="btn-signup modal-btn">je m'inscris</button>
 			</div>
 
-			<!-- MODAL FORM -->
+			<!-- MODAL REGISTERED AND FORM-->
+
+			<!-- Shared classes -->
 			<div class="bground">
 				<div class="content">
 					<span class="close"></span>
+
+					<!-- Modal "registered" -->
+					<div class="registered">
+						<i class="fa-regular fa-thumbs-up"></i>
+						<p>Merci, votre inscription est enregistrée !</p>
+					</div>
+					<!-- Modal "form" -->
 					<div class="modal-body">
 						<form
 							id="form"
@@ -238,6 +253,8 @@
 									<span class="checkbox-icon"></span>
 									J'ai lu et accepté les conditions d'utilisation.
 								</label>
+								<br />
+								<small id="terms-msg" class="error"></small>
 								<br />
 								<input
 									class="checkbox-input"
