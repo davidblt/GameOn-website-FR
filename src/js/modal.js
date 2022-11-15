@@ -63,83 +63,11 @@ const regexEmail = new RegExp(
 
 /*___________Validation des saisies du formulaire___________*/
 
-// Fonctions de vérification
+/* Déclaration de la variable de contrôle de la validité des champs, initialisée à false par défaut, pour empêcher la validation du formulaire.
+ */
+let control = false;
 
-// Firstname
-const checkFirstName = () => {
-	if (regexName.test(firstName.value.trim())) {
-		firstSmall.innerHTML = 'Saisie valide.';
-		firstSmall.style.color = 'green';
-		return true;
-	} else {
-		firstSmall.innerHTML =
-			'Veuillez entrer 2 caractères ou plus pour le champs du nom.';
-		firstSmall.style.color = 'red';
-		return false;
-	}
-};
-
-// Lastname
-const checkLastName = () => {
-	if (regexName.test(lastName.value.trim())) {
-		lastSmall.innerHTML = 'Saisie valide.';
-		lastSmall.style.color = 'green';
-		// isInputValid = true;
-		return true;
-	} else {
-		lastSmall.innerHTML =
-			'Veuillez entrer 2 caractères ou plus pour le champs du nom.';
-		lastSmall.style.color = 'red';
-		return false;
-	}
-};
-
-// Email
-const checkEmail = () => {
-	if (regexEmail.test(email.value.trim())) {
-		emailSmall.innerHTML = 'Saisie valide.';
-		emailSmall.style.color = 'green';
-		return true;
-	} else {
-		emailSmall.innerHTML = "Cette adresse e-mail n'est pas valide.";
-		emailSmall.style.color = 'red';
-		return false;
-	}
-};
-
-// Birthdate A VOIR RESTRICTIONS DATES
-const checkBirthDate = () => {
-	if (birthDate.value != '') {
-		dateSmall.innerHTML = 'Saisie valide';
-		dateSmall.style.color = 'green';
-		return true;
-	} else {
-		dateSmall.innerHTML = 'Vous devez entrer votre date de naissance.';
-		dateSmall.style.color = 'red';
-		return false;
-	}
-};
-
-// Tournaments quantity
-const checkQuantity = () => {
-	if (
-		quantity.value > 0 &&
-		quantity.value <= 99 &&
-		quantity.value % 1 == 0 &&
-		!quantity.value == ''
-	) {
-		quantitySmall.innerHTML = 'Saisie valide.';
-		quantitySmall.style.color = 'green';
-		return true;
-	} else {
-		quantitySmall.innerHTML = 'Veuillez indiquer un nombre valide.';
-		quantitySmall.style.color = 'red';
-		return false;
-	}
-};
-
-// Locations  NE FONCTIONNE PAS
-
+/********* TODO : AJOUTER ECOUTE ***********/
 const checkLocation = () => {
 	if (document.querySelector('input[name = "location"]:checked')) {
 		locationSmall.innerHTML = 'Saisie valide.';
@@ -154,35 +82,86 @@ const checkLocation = () => {
 
 // Ecoute des champs saisis :
 firstName.addEventListener('change', () => {
-	checkFirstName();
+	if (regexName.test(firstName.value.trim())) {
+		firstSmall.innerHTML = 'Saisie valide.';
+		firstSmall.style.color = 'green';
+		control = true;
+	} else {
+		firstSmall.innerHTML =
+			'Veuillez entrer 2 caractères ou plus pour le champs du nom.';
+		firstSmall.style.color = 'red';
+		control = false;
+	}
 });
 
 lastName.addEventListener('change', () => {
-	checkLastName();
+	if (regexName.test(lastName.value.trim())) {
+		lastSmall.innerHTML = 'Saisie valide.';
+		lastSmall.style.color = 'green';
+		// isInputValid = true;
+		control = true;
+	} else {
+		lastSmall.innerHTML =
+			'Veuillez entrer 2 caractères ou plus pour le champs du nom.';
+		lastSmall.style.color = 'red';
+		control = false;
+	}
 });
 
 email.addEventListener('change', () => {
-	checkEmail();
+	if (regexEmail.test(email.value.trim())) {
+		emailSmall.innerHTML = 'Saisie valide.';
+		emailSmall.style.color = 'green';
+		control = true;
+	} else {
+		emailSmall.innerHTML = "Cette adresse e-mail n'est pas valide.";
+		emailSmall.style.color = 'red';
+		control = false;
+	}
 });
 
 birthDate.addEventListener('change', () => {
-	checkBirthDate();
+	if (birthDate.value != '') {
+		dateSmall.innerHTML = 'Saisie valide';
+		dateSmall.style.color = 'green';
+		control = true;
+	} else {
+		dateSmall.innerHTML = 'Vous devez entrer votre date de naissance.';
+		dateSmall.style.color = 'red';
+		control = false;
+	}
 });
 
 quantity.addEventListener('change', () => {
-	checkQuantity();
-});
-
-btnSubmit.addEventListener('click', (e) => {
-	e.preventDefault();
-	// formValidation();
-	isFormValid();
-});
-
-const isFormValid = () => {
-	if (checkFirstName() && checkLastName()) {
-		console.log('ok');
+	if (
+		quantity.value > 0 &&
+		quantity.value <= 99 &&
+		quantity.value % 1 == 0 &&
+		!quantity.value == ''
+	) {
+		quantitySmall.innerHTML = 'Saisie valide.';
+		quantitySmall.style.color = 'green';
+		control = true;
 	} else {
-		console.log('prob');
+		quantitySmall.innerHTML = 'Veuillez indiquer un nombre valide.';
+		quantitySmall.style.color = 'red';
+		control = false;
 	}
+});
+
+/*
+ Fonction de validation du formulaire :
+ si la variable "control" est true, alors le formulaire peut être envoyer au serveur.
+ Si "control" est false, alors afficher un message d'information à l'utilisateur.
+ */
+const isFormValid = () => {
+	btnSubmit.addEventListener('click', (e) => {
+		e.preventDefault();
+		if (control) {
+			console.log('envoi serveur');
+		} else {
+			alert('Un ou plusieurs champs du formulaire ne sont pas valides');
+		}
+	});
 };
+isFormValid();
