@@ -207,6 +207,24 @@ main {
   margin: 15px auto;
 }
 
+.registered {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin: 1rem;
+}
+
+.registered__thumb {
+  text-align: center;
+  font-size: 6rem;
+}
+
+.registered__text {
+  text-align: center;
+}
+
 label {
   font-family: var(--font-default);
   font-size: 17px;
