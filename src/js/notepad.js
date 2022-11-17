@@ -12,7 +12,7 @@ const modalbg = document.querySelector('.bground');
 const modalBtn = document.querySelectorAll('.modal-btn');
 const formData = document.querySelectorAll('.formData');
 const modalClose = document.querySelector('.close');
-const modalConfirmation = document.querySelector('.modal-confirmation');
+const modalRegistered = document.querySelector('.registered');
 const modalBody = document.querySelector('.modal-body');
 
 // launch modal event
@@ -21,7 +21,7 @@ modalBtn.forEach((btn) => btn.addEventListener('click', launchModal));
 // launch modal form
 function launchModal() {
 	modalbg.style.display = 'block';
-	modalConfirmation.style.display = 'none';
+	modalRegistered.style.display = 'none';
 }
 
 // close modal event
@@ -45,7 +45,7 @@ const lastName = form.last;
 const email = form.email;
 const birthDate = form.birthdate;
 const quantity = form.quantity;
-const locationChoice = document.querySelector('.checkbox-input');
+const locations = document.getElementById('quantity');
 const termsOfUse = document.getElementById('checkbox1');
 const newsLetters = document.getElementById('checkbox2');
 const registered = document.querySelector('.registered');
@@ -57,7 +57,6 @@ const emailSmall = email.nextElementSibling;
 const dateSmall = birthDate.nextElementSibling;
 const quantitySmall = quantity.nextElementSibling;
 const locationSmall = document.getElementById('location-msg');
-const termsSmall = document.getElementById('terms-msg');
 
 // Création des Expressions Régulières :
 const regexName = new RegExp("^[a-zA-Z-' ]{2,}$");
@@ -72,10 +71,14 @@ const regexEmail = new RegExp(
 // FirstName
 const checkFirstName = () => {
 	if (regexName.test(firstName.value.trim())) {
-		firstSmall.textContent = '';
+		firstSmall.innerHTML = 'Saisie valide.';
+		firstSmall.style.color = 'green';
+		return true;
 	} else {
-		firstSmall.textContent =
+		firstSmall.innerHTML =
 			'Veuillez entrer 2 caractères ou plus pour le champs du nom.';
+		firstSmall.style.color = 'red';
+		return false;
 	}
 };
 firstName.addEventListener('change', checkFirstName);
@@ -83,10 +86,14 @@ firstName.addEventListener('change', checkFirstName);
 // LastName
 const checkLastName = () => {
 	if (regexName.test(lastName.value.trim())) {
-		lastSmall.textContent = '';
+		lastSmall.innerHTML = 'Saisie valide.';
+		lastSmall.style.color = 'green';
+		return true;
 	} else {
-		lastSmall.textContent =
+		lastSmall.innerHTML =
 			'Veuillez entrer 2 caractères ou plus pour le champs du nom.';
+		lastSmall.style.color = 'red';
+		return false;
 	}
 };
 lastName.addEventListener('change', checkLastName);
@@ -94,9 +101,13 @@ lastName.addEventListener('change', checkLastName);
 // Email
 const checkEmail = () => {
 	if (regexEmail.test(email.value.trim())) {
-		emailSmall.textContent = '';
+		emailSmall.innerHTML = 'Saisie valide.';
+		emailSmall.style.color = 'green';
+		return true;
 	} else {
-		emailSmall.textContent = "Cette adresse e-mail n'est pas valide.";
+		emailSmall.innerHTML = "Cette adresse e-mail n'est pas valide.";
+		emailSmall.style.color = 'red';
+		return false;
 	}
 };
 email.addEventListener('change', checkEmail);
@@ -104,9 +115,12 @@ email.addEventListener('change', checkEmail);
 // BirthDate
 const checkBirthDate = () => {
 	if (birthDate.value != '') {
-		dateSmall.textContent = '';
+		dateSmall.innerHTML = '';
+		return true;
 	} else {
-		dateSmall.textContent = 'Vous devez entrer votre date de naissance.';
+		dateSmall.innerHTML = 'Vous devez entrer votre date de naissance.';
+		dateSmall.style.color = 'red';
+		return false;
 	}
 };
 birthDate.addEventListener('change', checkBirthDate);
@@ -119,30 +133,42 @@ const checkQuantity = () => {
 		quantity.value % 1 == 0 &&
 		!quantity.value == ''
 	) {
-		quantitySmall.textContent = '';
+		quantitySmall.innerHTML = 'Saisie valide.';
+		quantitySmall.style.color = 'green';
+		return true;
 	} else {
-		quantitySmall.textContent = 'Veuillez indiquer un nombre valide.';
+		quantitySmall.innerHTML = 'Veuillez indiquer un nombre valide.';
+		quantitySmall.style.color = 'red';
+		return false;
 	}
 };
 quantity.addEventListener('change', checkQuantity);
 
 /********* TODO : AJOUTER ECOUTE ***********/
 const checkLocation = () => {
-	if (locationChoice.checked === true) {
-		locationSmall.textContent = '';
+	if (document.querySelector('input[name = "location"]:checked')) {
+		locationSmall.innerHTML = 'Saisie valide.';
+		locationSmall.style.color = 'green';
+		return true;
 	} else {
-		locationSmall.textContent = 'Vous devez choisir une option.';
+		locationSmall.innerHTML = 'Vous devez choisir une option.';
+		locationSmall.style.color = 'red';
+		return false;
 	}
 };
-locationChoice.addEventListener('change', checkLocation);
+locations.addEventListener('change', checkLocation);
 
 // Terms Of Use
 const checkTermsOfUse = () => {
+	let termsSmall = document.getElementById('terms-msg');
 	if (termsOfUse.checked) {
-		termsSmall.textContent = '';
+		termsSmall.innerHTML = '';
+		return true;
 	} else {
-		termsSmall.textContent =
+		termsSmall.innerHTML =
 			"Vous devez accepter les conditions d'utilisation pour vous inscrire.";
+		termsSmall.style.color = 'red';
+		return false;
 	}
 };
 termsOfUse.addEventListener('change', checkTermsOfUse);
@@ -150,37 +176,47 @@ termsOfUse.addEventListener('change', checkTermsOfUse);
 //______________ FINAL VALIDATION ______________
 
 /*
-Validation du formulaire :
-si la variable "control" est true, alors le formulaire peut être envoyer au serveur.
-Si "control" est false, alors afficher un message d'information à l'utilisateur.
+ Validation du formulaire :
+ si la variable "control" est true, alors le formulaire peut être envoyer au serveur.
+ Si "control" est false, alors afficher un message d'information à l'utilisateur.
  */
 
-const isFormValid = () => {
-	form.addEventListener('submit', (e) => {
-		e.preventDefault();
-		if (
-			regexName.test(firstName.value.trim()) &&
-			regexName.test(lastName.value.trim()) &&
-			regexEmail.test(email.value.trim()) &&
-			birthDate.value != '' &&
-			quantity.value > 0 &&
-			quantity.value <= 99 &&
-			quantity.value % 1 == 0 &&
-			!quantity.value == '' &&
-			locationChoice.checked === true &&
-			termsOfUse.checked === true
-		) {
-			launchConfirmationModal();
-		} else {
-			alert('Un ou plusieurs champs du formulaire ne sont pas valides');
-		}
-	});
-};
-isFormValid();
+form.addEventListener('submit', (e) => {
+	e.preventDefault();
+	if (
+		regexName.test(firstName.value.trim()) &&
+		regexName.test(lastName.value.trim()) &&
+		regexEmail.test(email.value.trim()) &&
+		birthDate.value != '' &&
+		quantity.value > 0 &&
+		quantity.value <= 99 &&
+		quantity.value % 1 == 0 &&
+		!quantity.value == '' &&
+		document.querySelector('input[name = "location"]:checked') &&
+		termsOfUse.checked === true
+	) {
+		launchSuccess();
+	} else {
+		alert('Un ou plusieurs champs du formulaire ne sont pas valides');
+	}
+});
 
-const launchConfirmationModal = () => {
-	modalConfirmation.style.display = 'block'; // a créer en HTML CSS
+const launchSuccess = () => {
+	registered.style.display = 'block'; // a créer en HTML CSS
 	modalBody.style.display = 'none';
 	form.reset();
 	console.log('envoi serveur');
+};
+
+//------------------------------------------------------------------
+/*** OBJET POUR ENVOI SERVEUR */
+let registrationUserInfos = {
+	firstName: firstName.value,
+	lastName: lastName.value,
+	email: email.value,
+	birthDate: birthDate.value,
+	quantity: Number(quantity.value),
+	// location: document.querySelector('input[type="radio"]:checked'),
+	// termsOfUse: termsOfUse.value,
+	// newsLetters: newsLetters.value,
 };

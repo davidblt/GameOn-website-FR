@@ -200,6 +200,7 @@ main {
 
 .error {
   font-size: 0.8rem;
+  color: #fe142f;
 }
 
 .modal-body {
@@ -207,22 +208,24 @@ main {
   margin: 15px auto;
 }
 
-.registered {
+.modal-confirmation {
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
   gap: 2rem;
   margin: 1rem;
+  color: #fe142f;
 }
 
-.registered__thumb {
+.modal-confirmation__icon {
   text-align: center;
   font-size: 6rem;
 }
 
-.registered__text {
+.modal-confirmation__text {
   text-align: center;
+  line-height: 1.5rem;
 }
 
 label {
@@ -231,6 +234,7 @@ label {
   font-weight: normal;
   display: inline-block;
   margin-bottom: 11px;
+  margin-top: 1rem;
 }
 
 input {

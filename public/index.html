@@ -94,23 +94,19 @@
 					<span class="close"></span>
 
 					<!-- Modal "registered" -->
-					<div class="registered">
-						<div class="registered__thumb">
+					<div class="modal-confirmation">
+						<div class="modal-confirmation__icon">
 							<i class="fa-regular fa-thumbs-up"></i>
 						</div>
-						<p class="" registered__text>
-							Merci, votre inscription est enregistrée !
+						<p class="modal-confirmation__text">
+							Merci, votre inscription est enregistrée ! <br />
+							Vous recevrez un e-mail de confirmation avec votre numéro
+							d'inscription.
 						</p>
 					</div>
 					<!-- Modal "form" -->
 					<div class="modal-body">
-						<form
-							id="form"
-							name="reserve"
-							action="index.html"
-							method="get"
-							novalidate
-						>
+						<form id="form" name="reserve" action="index.html" method="get">
 							<!-- FirstName -->
 							<div class="formData">
 								<label for="first">Prénom</label><br />
@@ -159,7 +155,7 @@
 								<label for="quantity"
 									>À combien de tournois GameOn avez-vous déjà participé
 									?</label
-								><br />
+								>
 								<input
 									type="number"
 									class="text-control"
@@ -259,7 +255,7 @@
 								</label>
 								<br />
 								<small id="terms-msg" class="error"></small>
-								<br />
+
 								<input
 									class="checkbox-input"
 									type="checkbox"
@@ -270,7 +266,6 @@
 									<span class="checkbox-icon"></span>
 									Je souhaite être prévenu(e) des prochains évènements.
 								</label>
-								<br />
 							</div>
 							<input
 								class="btn-submit"
