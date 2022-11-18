@@ -45,7 +45,7 @@ const lastName = form.last;
 const email = form.email;
 const birthDate = form.birthdate;
 const quantity = form.quantity;
-const locationChoice = document.querySelector('.checkbox-input');
+const locationChoice = document.querySelectorAll('input[name="location"]');
 const termsOfUse = document.getElementById('checkbox1');
 const newsLetters = document.getElementById('checkbox2');
 const registered = document.querySelector('.registered');
@@ -127,14 +127,24 @@ const checkQuantity = () => {
 quantity.addEventListener('change', checkQuantity);
 
 /********* TODO : AJOUTER ECOUTE ***********/
+let radioChecked = false;
 const checkLocation = () => {
-	if (locationChoice.checked === true) {
+	for (let i = 0; i < locationChoice.length; i++) {
+		if (locationChoice[i].checked) {
+			radioChecked = true;
+			break;
+		}
+	}
+	if (radioChecked) {
 		locationSmall.textContent = '';
+		console.log('checked !');
 	} else {
 		locationSmall.textContent = 'Vous devez choisir une option.';
+		console.log('not checked !');
+		return false;
 	}
 };
-locationChoice.addEventListener('change', checkLocation);
+// locationChoice.addEventListener('change', checkLocation);
 
 // Terms Of Use
 const checkTermsOfUse = () => {
@@ -158,6 +168,7 @@ Si "control" est false, alors afficher un message d'information à l'utilisateur
 const isFormValid = () => {
 	form.addEventListener('submit', (e) => {
 		e.preventDefault();
+		checkLocation();
 		if (
 			regexName.test(firstName.value.trim()) &&
 			regexName.test(lastName.value.trim()) &&
@@ -167,8 +178,8 @@ const isFormValid = () => {
 			quantity.value <= 99 &&
 			quantity.value % 1 == 0 &&
 			!quantity.value == '' &&
-			locationChoice.checked === true &&
-			termsOfUse.checked === true
+			radioChecked == 1 &&
+			termsOfUse.checked == true
 		) {
 			launchConfirmationModal();
 		} else {
@@ -179,8 +190,7 @@ const isFormValid = () => {
 isFormValid();
 
 const launchConfirmationModal = () => {
-	modalConfirmation.style.display = 'block'; // a créer en HTML CSS
+	modalConfirmation.style.display = 'block';
 	modalBody.style.display = 'none';
-	form.reset();
 	console.log('envoi serveur');
 };

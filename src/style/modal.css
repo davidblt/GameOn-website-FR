@@ -215,7 +215,6 @@ main {
   align-items: center;
   gap: 2rem;
   margin: 1rem;
-  color: #fe142f;
 }
 
 .modal-confirmation__icon {
@@ -225,7 +224,7 @@ main {
 
 .modal-confirmation__text {
   text-align: center;
-  line-height: 1.5rem;
+  line-height: 2rem;
 }
 
 label {
