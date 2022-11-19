@@ -73,9 +73,14 @@ const regexEmail = new RegExp(
 const checkFirstName = () => {
 	if (regexName.test(firstName.value.trim())) {
 		firstSmall.textContent = '';
+		firstName.classList.add('valid');
+				firstName.classList.remove('invalid');
+
 	} else {
 		firstSmall.textContent =
 			'Veuillez entrer 2 caractères ou plus pour le champs du nom.';
+		firstName.classList.remove('valid');
+		firstName.classList.add('invalid');
 	}
 };
 firstName.addEventListener('change', checkFirstName);
@@ -84,9 +89,14 @@ firstName.addEventListener('change', checkFirstName);
 const checkLastName = () => {
 	if (regexName.test(lastName.value.trim())) {
 		lastSmall.textContent = '';
+		lastName.classList.add('valid');
+				lastName.classList.remove('invalid');
+
 	} else {
 		lastSmall.textContent =
 			'Veuillez entrer 2 caractères ou plus pour le champs du nom.';
+		lastName.classList.remove('valid');
+		lastName.classList.add('invalid');
 	}
 };
 lastName.addEventListener('change', checkLastName);
@@ -95,8 +105,13 @@ lastName.addEventListener('change', checkLastName);
 const checkEmail = () => {
 	if (regexEmail.test(email.value.trim())) {
 		emailSmall.textContent = '';
+		email.classList.add('valid');
+						email.classList.remove('invalid');
+
 	} else {
 		emailSmall.textContent = "Cette adresse e-mail n'est pas valide.";
+		email.classList.remove('valid');
+		email.classList.add('invalid');
 	}
 };
 email.addEventListener('change', checkEmail);
@@ -105,8 +120,13 @@ email.addEventListener('change', checkEmail);
 const checkBirthDate = () => {
 	if (birthDate.value != '') {
 		dateSmall.textContent = '';
+		birthDate.classList.add('valid');
+						birthDate.classList.remove('invalid');
+
 	} else {
 		dateSmall.textContent = 'Vous devez entrer votre date de naissance.';
+		birthDate.classList.remove('valid');
+		birthDate.classList.add('invalid');
 	}
 };
 birthDate.addEventListener('change', checkBirthDate);
@@ -120,8 +140,13 @@ const checkQuantity = () => {
 		!quantity.value == ''
 	) {
 		quantitySmall.textContent = '';
+		quantity.classList.add('valid');
+						quantity.classList.remove('invalid');
+
 	} else {
 		quantitySmall.textContent = 'Veuillez indiquer un nombre valide.';
+		quantity.classList.remove('valid');
+		quantity.classList.add('invalid');
 	}
 };
 quantity.addEventListener('change', checkQuantity);
@@ -194,7 +219,7 @@ const isFormValid = () => {
 			// 	email: email.value,
 			// 	birthdate: birthDate.value,
 			// 	quantity: quantity.value,
-				
+
 			// }
 		} else {
 			alert('Un ou plusieurs champs du formulaire ne sont pas valides');
