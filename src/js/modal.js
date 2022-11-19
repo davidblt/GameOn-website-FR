@@ -126,7 +126,7 @@ const checkQuantity = () => {
 };
 quantity.addEventListener('change', checkQuantity);
 
-/********* TODO : AJOUTER ECOUTE ***********/
+// Location : Boucle pour vérifier chaque radio si coché ou non
 let radioChecked = false;
 const checkLocation = () => {
 	for (let i = 0; i < locationChoice.length; i++) {
@@ -137,10 +137,8 @@ const checkLocation = () => {
 	}
 	if (radioChecked) {
 		locationSmall.textContent = '';
-		console.log('checked !');
 	} else {
 		locationSmall.textContent = 'Vous devez choisir une option.';
-		console.log('not checked !');
 		return false;
 	}
 };
@@ -161,14 +159,21 @@ termsOfUse.addEventListener('change', checkTermsOfUse);
 
 /*
 Validation du formulaire :
-si la variable "control" est true, alors le formulaire peut être envoyer au serveur.
-Si "control" est false, alors afficher un message d'information à l'utilisateur.
+Appel des fonctions de contrôle des champs.
+Si les conditions sont remplies, alors la fonction pour afficher le message de succès est lancée.
+Sinon, une alerte est envoyée à l'utilisateur pour lui signifier les erreurs.
  */
 
 const isFormValid = () => {
 	form.addEventListener('submit', (e) => {
 		e.preventDefault();
+		checkFirstName();
+		checkLastName();
+		checkEmail();
+		checkBirthDate();
+		checkQuantity();
 		checkLocation();
+		checkTermsOfUse();
 		if (
 			regexName.test(firstName.value.trim()) &&
 			regexName.test(lastName.value.trim()) &&
@@ -182,6 +187,15 @@ const isFormValid = () => {
 			termsOfUse.checked == true
 		) {
 			launchConfirmationModal();
+
+			// let userRegistration = {
+			// 	firstname: firstName.value,
+			// 	lastname: lastName.value,
+			// 	email: email.value,
+			// 	birthdate: birthDate.value,
+			// 	quantity: quantity.value,
+				
+			// }
 		} else {
 			alert('Un ou plusieurs champs du formulaire ne sont pas valides');
 		}
