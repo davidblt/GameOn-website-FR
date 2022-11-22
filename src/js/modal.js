@@ -56,7 +56,7 @@ const registered = document.querySelector('.registered');
 // const emailSmall = email.nextElementSibling;
 // const dateSmall = birthDate.nextElementSibling;
 // const quantitySmall = quantity.nextElementSibling;
-// const locationSmall = document.getElementById('location-msg');
+const locationErrorMsg = document.getElementById('location-error');
 // const termsSmall = document.getElementById('terms-msg');
 
 // Création des Expressions Régulières :
@@ -65,6 +65,24 @@ const regexEmail = new RegExp(
 	'^[a-z0-9][-a-z0-9._]+@([-a-z0-9]+.)+[.]{1}[a-z]{2,3}$'
 );
 
+/*
+ Affiche le message d'erreur depuis l'attribut 'data-error'
+ suivant qu'il est false si l'input est valide, ou true si l'input est non valide.
+ inputParent récupère l'élément 'input' propriétaire de l'attribut.
+ isInputValid utilise la méthode "checkValidity()" pour retourner true ou false.
+ S'il est false, l'attribut data-error n'est pas visible.
+ S'il est true, data-error affiche le message.  
+ */
+const displayError = (input) => {
+	const inputParent = input.parentElement;
+	const isInputValid = input.checkValidity();
+	if (isInputValid) {
+		inputParent.setAttribute('data-error-visible', 'false');
+	} else {
+		inputParent.setAttribute('data-error-visible', 'true');
+	}
+};
+
 /*___________Validation des saisies du formulaire___________*/
 
 // Ecoute des champs saisis + fonctions associées :
@@ -72,56 +90,44 @@ const regexEmail = new RegExp(
 // FirstName
 const checkFirstName = () => {
 	if (regexName.test(firstName.value.trim())) {
-		firstSmall.textContent = '';
-		firstName.classList.add('valid');
-		firstName.classList.remove('invalid');
+		firstName.setCustomValidity('');
 	} else {
-		firstSmall.textContent = 'Veuillez entrer 2 caractères ou plus.';
-		firstName.classList.remove('valid');
-		firstName.classList.add('invalid');
+		firstName.setCustomValidity('Veuillez entrer 2 caractères ou plus.');
 	}
+	displayError(firstName);
 };
 firstName.addEventListener('change', checkFirstName);
 
 // LastName
 const checkLastName = () => {
 	if (regexName.test(lastName.value.trim())) {
-		lastSmall.textContent = '';
-		lastName.classList.add('valid');
-		lastName.classList.remove('invalid');
+		lastName.setCustomValidity('');
 	} else {
-		lastSmall.textContent = 'Veuillez entrer 2 caractères ou plus.';
-		lastName.classList.remove('valid');
-		lastName.classList.add('invalid');
+		lastName.setCustomValidity('Veuillez entrer 2 caractères ou plus.');
 	}
+	displayError(lastName);
 };
 lastName.addEventListener('change', checkLastName);
 
 // Email
 const checkEmail = () => {
 	if (regexEmail.test(email.value.trim())) {
-		emailSmall.textContent = '';
-		email.classList.add('valid');
-		email.classList.remove('invalid');
+		email.setCustomValidity('');
 	} else {
-		emailSmall.textContent = 'Veuillez entrer une adresse e-mail valide.';
-		email.classList.remove('valid');
-		email.classList.add('invalid');
+		email.setCustomValidity('Veuillez entrer une adresse e-mail valide.');
 	}
+	displayError(email);
 };
 email.addEventListener('change', checkEmail);
 
 // BirthDate
 const checkBirthDate = () => {
 	if (birthDate.value != '') {
-		dateSmall.textContent = '';
-		birthDate.classList.add('valid');
-		birthDate.classList.remove('invalid');
+		birthDate.setCustomValidity('');
 	} else {
-		dateSmall.textContent = 'Vous devez entrer votre date de naissance.';
-		birthDate.classList.remove('valid');
-		birthDate.classList.add('invalid');
+		birthDate.setCustomValidity('Vous devez entrer votre date de naissance.');
 	}
+	displayError(birthDate);
 };
 birthDate.addEventListener('change', checkBirthDate);
 
@@ -131,16 +137,13 @@ const checkQuantity = () => {
 		quantity.value > 0 &&
 		quantity.value <= 99 &&
 		quantity.value % 1 == 0 &&
-		!quantity.value == ''
+		quantity.value !== ''
 	) {
-		quantitySmall.textContent = '';
-		quantity.classList.add('valid');
-		quantity.classList.remove('invalid');
+		quantity.setCustomValidity('');
 	} else {
-		quantitySmall.textContent = 'Veuillez indiquer un nombre entre 0 et 99.';
-		quantity.classList.remove('valid');
-		quantity.classList.add('invalid');
+		quantity.setCustomValidity('Veuillez indiquer un nombre entre 0 et 99.');
 	}
+	displayError(quantity);
 };
 quantity.addEventListener('change', checkQuantity);
 
@@ -154,22 +157,26 @@ const checkLocation = () => {
 		}
 	}
 	if (radioChecked) {
-		locationSmall.textContent = '';
+		locationErrorMsg.innerHTML = '';
 	} else {
-		locationSmall.textContent = 'Veuillez choisir une option.';
-		return false;
+		locationErrorMsg.innerHTML = 'Veuillez choisir une option.';
+		// return false;
 	}
 };
-// locationChoice.addEventListener('change', checkLocation);
+// locationChoice.forEach((radio) => {
+// 	radio.addEventListener('change', checkLocation);
+// });
 
 // Terms Of Use
 const checkTermsOfUse = () => {
 	if (termsOfUse.checked) {
-		termsSmall.textContent = '';
+		termsOfUse.setCustomValidity('');
 	} else {
-		termsSmall.textContent =
-			"Veuillez accepter les conditions d'utilisation pour vous inscrire.";
+		termsOfUse.setCustomValidity(
+			"Veuillez accepter les conditions d'utilisation pour vous inscrire."
+		);
 	}
+	displayError(termsOfUse);
 };
 termsOfUse.addEventListener('change', checkTermsOfUse);
 
@@ -200,7 +207,7 @@ const isFormValid = () => {
 			quantity.value > 0 &&
 			quantity.value <= 99 &&
 			quantity.value % 1 == 0 &&
-			!quantity.value == '' &&
+			quantity.value !== '' &&
 			radioChecked == 1 &&
 			termsOfUse.checked == true
 		) {
