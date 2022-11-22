@@ -51,13 +51,13 @@ const newsLetters = document.getElementById('checkbox2');
 const registered = document.querySelector('.registered');
 
 // Récupèration des balises <small> pour afficher les messages d'erreur :
-const firstSmall = firstName.nextElementSibling;
-const lastSmall = lastName.nextElementSibling;
-const emailSmall = email.nextElementSibling;
-const dateSmall = birthDate.nextElementSibling;
-const quantitySmall = quantity.nextElementSibling;
-const locationSmall = document.getElementById('location-msg');
-const termsSmall = document.getElementById('terms-msg');
+// const firstSmall = firstName.nextElementSibling;
+// const lastSmall = lastName.nextElementSibling;
+// const emailSmall = email.nextElementSibling;
+// const dateSmall = birthDate.nextElementSibling;
+// const quantitySmall = quantity.nextElementSibling;
+// const locationSmall = document.getElementById('location-msg');
+// const termsSmall = document.getElementById('terms-msg');
 
 // Création des Expressions Régulières :
 const regexName = new RegExp("^[a-zA-Z-' ]{2,}$");
@@ -74,11 +74,9 @@ const checkFirstName = () => {
 	if (regexName.test(firstName.value.trim())) {
 		firstSmall.textContent = '';
 		firstName.classList.add('valid');
-				firstName.classList.remove('invalid');
-
+		firstName.classList.remove('invalid');
 	} else {
-		firstSmall.textContent =
-			'Veuillez entrer 2 caractères ou plus pour le champs du nom.';
+		firstSmall.textContent = 'Veuillez entrer 2 caractères ou plus.';
 		firstName.classList.remove('valid');
 		firstName.classList.add('invalid');
 	}
@@ -90,11 +88,9 @@ const checkLastName = () => {
 	if (regexName.test(lastName.value.trim())) {
 		lastSmall.textContent = '';
 		lastName.classList.add('valid');
-				lastName.classList.remove('invalid');
-
+		lastName.classList.remove('invalid');
 	} else {
-		lastSmall.textContent =
-			'Veuillez entrer 2 caractères ou plus pour le champs du nom.';
+		lastSmall.textContent = 'Veuillez entrer 2 caractères ou plus.';
 		lastName.classList.remove('valid');
 		lastName.classList.add('invalid');
 	}
@@ -106,10 +102,9 @@ const checkEmail = () => {
 	if (regexEmail.test(email.value.trim())) {
 		emailSmall.textContent = '';
 		email.classList.add('valid');
-						email.classList.remove('invalid');
-
+		email.classList.remove('invalid');
 	} else {
-		emailSmall.textContent = "Cette adresse e-mail n'est pas valide.";
+		emailSmall.textContent = 'Veuillez entrer une adresse e-mail valide.';
 		email.classList.remove('valid');
 		email.classList.add('invalid');
 	}
@@ -121,8 +116,7 @@ const checkBirthDate = () => {
 	if (birthDate.value != '') {
 		dateSmall.textContent = '';
 		birthDate.classList.add('valid');
-						birthDate.classList.remove('invalid');
-
+		birthDate.classList.remove('invalid');
 	} else {
 		dateSmall.textContent = 'Vous devez entrer votre date de naissance.';
 		birthDate.classList.remove('valid');
@@ -141,10 +135,9 @@ const checkQuantity = () => {
 	) {
 		quantitySmall.textContent = '';
 		quantity.classList.add('valid');
-						quantity.classList.remove('invalid');
-
+		quantity.classList.remove('invalid');
 	} else {
-		quantitySmall.textContent = 'Veuillez indiquer un nombre valide.';
+		quantitySmall.textContent = 'Veuillez indiquer un nombre entre 0 et 99.';
 		quantity.classList.remove('valid');
 		quantity.classList.add('invalid');
 	}
@@ -163,7 +156,7 @@ const checkLocation = () => {
 	if (radioChecked) {
 		locationSmall.textContent = '';
 	} else {
-		locationSmall.textContent = 'Vous devez choisir une option.';
+		locationSmall.textContent = 'Veuillez choisir une option.';
 		return false;
 	}
 };
@@ -175,7 +168,7 @@ const checkTermsOfUse = () => {
 		termsSmall.textContent = '';
 	} else {
 		termsSmall.textContent =
-			"Vous devez accepter les conditions d'utilisation pour vous inscrire.";
+			"Veuillez accepter les conditions d'utilisation pour vous inscrire.";
 	}
 };
 termsOfUse.addEventListener('change', checkTermsOfUse);

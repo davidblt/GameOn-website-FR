@@ -615,16 +615,16 @@ footer {
 }
 
 /* visual if valid input */
-.valid {
-  border: 4px solid green;
-}
+/* .valid {
+  border: 3px solid green;
+} */
 
 /* Small msg if invalid input */
-.error {
+/* .error {
   font-size: 0.8rem;
   color: #fe142f;
 }
 
 .invalid {
-  border: 4px solid #fe142f;
-}
+  border: 3px solid #fe142f;
+} */

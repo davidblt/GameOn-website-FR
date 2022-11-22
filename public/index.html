@@ -109,7 +109,7 @@
 					<div class="modal-body">
 						<form id="form" name="reserve" action="index.html" method="get">
 							<!-- FirstName -->
-							<div class="formData">
+							<div class="formData" data-error="Veuillez entrer 2 caractères ou plus.">
 								<label for="first">Prénom</label><br />
 								<input
 									class="text-control"
@@ -117,18 +117,20 @@
 									id="first"
 									name="first"
 								/>
+								<br>
 								<small class="error"></small>
 							</div>
 
 							<!-- LastName -->
-							<div class="formData">
+							<div class="formData" data-error="Veuillez entrer 2 caractères ou plus.">
 								<label for="last">Nom</label><br />
 								<input class="text-control" type="text" id="last" name="last" />
+								<br>
 								<small class="error"></small>
 							</div>
 
 							<!-- Email -->
-							<div class="formData">
+							<div class="formData" data-error="Veuillez entrer une adresse e-mail valide">
 								<label for="email">E-mail</label><br />
 								<input
 									class="text-control"
@@ -136,11 +138,12 @@
 									id="email"
 									name="email"
 								/>
+								<br>
 								<small class="error"></small>
 							</div>
 
 							<!-- BirthDate -->
-							<div class="formData">
+							<div class="formData" data-error="Veuillez entrer votre date de naissance.">
 								<label for="birthdate">Date de naissance</label><br />
 								<input
 									class="text-control"
@@ -148,11 +151,12 @@
 									id="birthdate"
 									name="birthdate"
 								/>
+								<br>
 								<small class="error"></small>
 							</div>
 
 							<!-- Tournaments quantity & locations -->
-							<div class="formData">
+							<div class="formData" data-error="Veuillez entrer un nombre entre 0 et 99.">
 								<label for="quantity"
 									>À combien de tournois GameOn avez-vous déjà participé
 									?</label
@@ -170,7 +174,7 @@
 							<p class="text-label">
 								A quel tournoi souhaitez-vous participer cette année ?
 							</p>
-							<div class="formData">
+							<div class="formData" data-error="Veuillez choisir une option.">
 								<input
 									class="checkbox-input"
 									type="radio"
@@ -241,7 +245,7 @@
 							<small id="location-msg" class="error"></small>
 
 							<!-- Terms of use & Newsletters-->
-							<div class="formData">
+							<div class="formData" data-error="Veuillez accepter les conditions d'utilisation pour vous inscrire.">
 								<input
 									class="checkbox-input"
 									type="checkbox"
@@ -256,7 +260,6 @@
 								</label>
 								<br />
 								<small id="terms-msg" class="error"></small>
-
 								<input
 									class="checkbox-input"
 									type="checkbox"
@@ -267,6 +270,7 @@
 									<span class="checkbox-icon"></span>
 									Je souhaite être prévenu(e) des prochains évènements.
 								</label>
+								<br>
 							</div>
 							<input
 								class="btn-submit"
