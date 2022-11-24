@@ -32,8 +32,6 @@ function closeModal() {
 	modalbg.style.display = 'none';
 }
 
-//------------------------------------------------------------------
-
 /*__________FORM VALIDATION___________*/
 
 // Sélection des éléments dans le DOM :
@@ -50,15 +48,6 @@ const termsOfUse = document.getElementById('checkbox1');
 const newsLetters = document.getElementById('checkbox2');
 const registered = document.querySelector('.registered');
 
-// Récupèration des balises <small> pour afficher les messages d'erreur :
-// const firstSmall = firstName.nextElementSibling;
-// const lastSmall = lastName.nextElementSibling;
-// const emailSmall = email.nextElementSibling;
-// const dateSmall = birthDate.nextElementSibling;
-// const quantitySmall = quantity.nextElementSibling;
-const locationErrorMsg = document.getElementById('location-error');
-// const termsSmall = document.getElementById('terms-msg');
-
 // Création des Expressions Régulières :
 const regexName = new RegExp("^[a-zA-Z-' ]{2,}$");
 const regexEmail = new RegExp(
@@ -66,13 +55,13 @@ const regexEmail = new RegExp(
 );
 
 /*
- Affiche le message d'erreur depuis l'attribut 'data-error'
- suivant qu'il est false si l'input est valide, ou true si l'input est non valide.
- inputParent récupère l'élément 'input' propriétaire de l'attribut.
- isInputValid utilise la méthode "checkValidity()" pour retourner true ou false.
- S'il est false, l'attribut data-error n'est pas visible.
- S'il est true, data-error affiche le message.  
- */
+Affiche le message d'erreur depuis l'attribut 'data-error'
+suivant qu'il est false si l'input est valide, ou true si l'input estnon valide.
+inputParent récupère l'élément 'input' propriétaire de l'attribut.
+isInputValid utilise la méthode "checkValidity()" pour retourner true ou false.
+S'il est false, l'attribut data-error n'est pas visible.
+S'il est true, data-error affiche le message.  
+*/
 const displayError = (input) => {
 	const inputParent = input.parentElement;
 	const isInputValid = input.checkValidity();
@@ -85,7 +74,7 @@ const displayError = (input) => {
 
 /*___________Validation des saisies du formulaire___________*/
 
-// Ecoute des champs saisis + fonctions associées :
+// Ecoute des inputs + fonctions associées :
 
 // FirstName
 const checkFirstName = () => {
@@ -150,6 +139,7 @@ quantity.addEventListener('change', checkQuantity);
 // Location : Boucle pour vérifier chaque radio si coché ou non
 let radioChecked = false;
 const checkLocation = () => {
+	const locationErrorMsg = document.getElementById('location-error');
 	for (let i = 0; i < locationChoice.length; i++) {
 		if (locationChoice[i].checked) {
 			radioChecked = true;
@@ -157,15 +147,14 @@ const checkLocation = () => {
 		}
 	}
 	if (radioChecked) {
-		locationErrorMsg.innerHTML = '';
+		locationErrorMsg.textContent = '';
 	} else {
-		locationErrorMsg.innerHTML = 'Veuillez choisir une option.';
-		// return false;
+		locationErrorMsg.textContent = 'Veuillez choisir une option.';
 	}
 };
-// locationChoice.forEach((radio) => {
-// 	radio.addEventListener('change', checkLocation);
-// });
+locationChoice.forEach((radio) => {
+	radio.addEventListener('change', checkLocation);
+});
 
 // Terms Of Use
 const checkTermsOfUse = () => {
@@ -180,56 +169,66 @@ const checkTermsOfUse = () => {
 };
 termsOfUse.addEventListener('change', checkTermsOfUse);
 
-//______________ FINAL VALIDATION ______________
+// NewsLetters
+const checkNewsLetters = () => {
+	if (newsLetters.checked) {
+		return true;
+	} else {
+		return false;
+	}
+};
 
 /*
 Validation du formulaire :
 Appel des fonctions de contrôle des champs.
-Si les conditions sont remplies, alors la fonction pour afficher le message de succès est lancée.
+Si les conditions sont remplies, alors la fonction pour afficher le message de succès est lancée + création de l'objet 'userRegistration' contenant les input de l'utilisateur.
 Sinon, une alerte est envoyée à l'utilisateur pour lui signifier les erreurs.
- */
+*/
 
-const isFormValid = () => {
-	form.addEventListener('submit', (e) => {
-		e.preventDefault();
-		checkFirstName();
-		checkLastName();
-		checkEmail();
-		checkBirthDate();
-		checkQuantity();
-		checkLocation();
-		checkTermsOfUse();
-		if (
-			regexName.test(firstName.value.trim()) &&
-			regexName.test(lastName.value.trim()) &&
-			regexEmail.test(email.value.trim()) &&
-			birthDate.value != '' &&
-			quantity.value > 0 &&
-			quantity.value <= 99 &&
-			quantity.value % 1 == 0 &&
-			quantity.value !== '' &&
-			radioChecked == 1 &&
-			termsOfUse.checked == true
-		) {
-			launchConfirmationModal();
+const isFormValid = (event) => {
+	event.preventDefault();
 
-			// let userRegistration = {
-			// 	firstname: firstName.value,
-			// 	lastname: lastName.value,
-			// 	email: email.value,
-			// 	birthdate: birthDate.value,
-			// 	quantity: quantity.value,
+	checkFirstName();
+	checkLastName();
+	checkEmail();
+	checkBirthDate();
+	checkQuantity();
+	checkLocation();
+	checkTermsOfUse();
+	if (
+		regexName.test(firstName.value.trim()) &&
+		regexName.test(lastName.value.trim()) &&
+		regexEmail.test(email.value.trim()) &&
+		birthDate.value != '' &&
+		quantity.value > 0 &&
+		quantity.value <= 99 &&
+		quantity.value % 1 == 0 &&
+		quantity.value !== '' &&
+		radioChecked == 1 &&
+		termsOfUse.checked == true
+	) {
+		launchConfirmationModal();
 
-			// }
-		} else {
-			alert('Un ou plusieurs champs du formulaire ne sont pas valides');
-		}
-	});
+		const userRegistration = {
+			firstname: firstName.value,
+			lastname: lastName.value,
+			email: email.value,
+			birthdate: birthDate.value,
+			quantity: quantity.value,
+			location: document.querySelector('input[name="location"]:checked').value,
+			termsOfUse: termsOfUse.checked,
+			newsLetters: newsLetters.checked,
+		};
+		localStorage.setItem('userRegistration', JSON.stringify(userRegistration));
+	} else {
+		alert('Un ou plusieurs champs du formulaire ne sont pas valides');
+	}
 };
-isFormValid();
+form.reset();
 
 const launchConfirmationModal = () => {
 	modalConfirmation.style.display = 'block';
 	modalBody.style.display = 'none';
-	console.log('envoi serveur');
 };
+
+form.addEventListener('submit', isFormValid);

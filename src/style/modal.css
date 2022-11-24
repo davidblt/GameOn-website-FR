@@ -210,25 +210,37 @@ main {
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 1rem;
   margin: 2rem;
   border: 4px solid #fe142f;
   padding: 2.5rem;
+  animation-name: modalconfirm;
+  animation-duration: var(--modal-duration);
+}
+
+.modal-confirmation__logo,
+.modal-confirmation__icon,
+.modal-confirmation__text,
+.modal-confirmation__small,
+.modal-confirmation__luck {
+  text-align: center;
 }
 
 .modal-confirmation__logo {
-  text-align: center;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .modal-confirmation__icon {
-  text-align: center;
   font-size: 5rem;
 }
 
 .modal-confirmation__text {
-  text-align: center;
   line-height: 2.5rem;
+}
+
+.modal-confirmation__text small {
+  font-size: 1rem;
+  color: #fe142f;
 }
 
 label {
@@ -604,17 +616,6 @@ footer {
   }
 }
 
-@keyframes modalopen {
-  from {
-    opacity: 0;
-    transform: translateY(-150px);
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
 /* Error msg displayed if location input is not valid */
 #location-error {
   font-size: 0.8rem;
@@ -626,10 +627,25 @@ footer {
   transition: 0.3s;
 }
 
-/* visual if valid input */
-/* .valid {
-  border: 3px solid green;
-} */
-/* .invalid {
-  border: 3px solid #e54858;
-} */
+@keyframes modalopen {
+  from {
+    opacity: 0;
+    transform: translateY(-150px);
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalconfirm {
+  from {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
